@@ -11,7 +11,7 @@
 	</main>
 
 	<footer>
-		<p>Povered by Svelte</p>
+		<p>Povered by SvelteKit</p>
 	</footer>
 </div>
 
@@ -39,15 +39,5 @@
 		justify-content: center;
 		align-items: center;
 		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
 	}
 </style>
