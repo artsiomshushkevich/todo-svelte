@@ -6,7 +6,7 @@
 
 	let todo = '';
 	let isLoading = false;
-	$: isSubmissionEanbled = todo.length > 0 || !isLoading;
+	$: isSubmissionEnabled = todo.length > 0 && !isLoading;
 
 	const handleSubmit = async (e: SubmitEvent) => {
 		e.preventDefault();
@@ -37,7 +37,7 @@
 			placeholder="Enter todo"
 		/>
 		&nbsp;
-		<button disabled={!isSubmissionEanbled}>{isLoading ? 'Loading' : 'Add'}</button>
+		<button disabled={!isSubmissionEnabled}>{isLoading ? 'Loading' : 'Add'}</button>
 	</div>
 </form>
 

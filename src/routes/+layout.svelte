@@ -1,10 +1,12 @@
-<script>
-	import Header from './components/Header.svelte';
+<script lang="ts">
+	import Header from '$lib/components/Header.svelte';
 	import './styles.css';
+
+	export let data;
 </script>
 
 <div class="app">
-	<Header />
+	<Header isAuthenticated={data.isAuthenticated} onLogOut={() => (data.isAuthenticated = false)} />
 
 	<main>
 		<slot />
