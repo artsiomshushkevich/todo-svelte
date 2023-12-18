@@ -1,6 +1,8 @@
 import { redirect } from '@sveltejs/kit';
-import { logIn, signUp } from '$lib/models/auth';
-import type { CookieSerializeOptions } from 'cookie';
+import { type CookieSerializeOptions } from 'cookie';
+import { BASE_AUTH_URL } from '$lib/constants/urls';
+import { type SignInAndSingUpResponse } from '$lib/types/auth';
+import { getCommonApiHeaders } from '$lib/utils/headers';
 
 const TOKEN_COOKIE_CONFIG: CookieSerializeOptions & { path: string } = {
 	path: '/',
@@ -14,7 +16,11 @@ export const actions = {
 		const username = data.get('username') as string;
 		const password = data.get('password') as string;
 
-		const { token } = await logIn(username, password);
+		const { token } = await fetch(`${BASE_AUTH_URL}/login`, {
+			method: 'POST',
+			headers: getCommonApiHeaders(),
+			body: JSON.stringify({ username, password })
+		}).then((response) => response.json() as unknown as SignInAndSingUpResponse);
 
 		cookies.set('token', token, TOKEN_COOKIE_CONFIG);
 
@@ -25,7 +31,11 @@ export const actions = {
 		const username = data.get('username') as string;
 		const password = data.get('password') as string;
 
-		const { token } = await signUp(username, password);
+		const { token } = await fetch(`${BASE_AUTH_URL}/signup`, {
+			method: 'POST',
+			headers: getCommonApiHeaders(),
+			body: JSON.stringify({ username, password })
+		}).then((response) => response.json() as unknown as SignInAndSingUpResponse);
 
 		cookies.set('token', token, TOKEN_COOKIE_CONFIG);
 

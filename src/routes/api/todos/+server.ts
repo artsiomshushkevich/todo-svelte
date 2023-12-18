@@ -21,7 +21,7 @@ export const POST = async ({ cookies, request, fetch }) => {
 	const todo = await fetch(`${BASE_TODOS_URL}/`, {
 		method: 'POST',
 		headers: getCommonApiHeaders(token),
-		body: await request.json()
+		body: JSON.stringify(await request.json())
 	}).then((response) => response.json() as unknown as Todo);
 
 	return json(todo, { status: 201 });
@@ -31,11 +31,11 @@ export const PUT = async ({ cookies, request, fetch }) => {
 	const body = (await request.json()) as Todo;
 	const token = cookies.get('token') as string;
 
-	const todo = await fetch(`${BASE_TODOS_URL}/${body.id}`, {
+	await fetch(`${BASE_TODOS_URL}/${body.id}`, {
 		method: 'PUT',
 		headers: getCommonApiHeaders(token),
 		body: JSON.stringify({ todo: body.todo, isChecked: body.isChecked })
-	}).then((response) => response.json() as unknown as Todo);
+	}).then((response) => response.json() as unknown as boolean);
 
-	return json(todo, { status: 200 });
+	return json(true, { status: 200 });
 };

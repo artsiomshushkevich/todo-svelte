@@ -1,7 +1,11 @@
 import { type Todo } from '$lib/types/todos';
 import { getCommonApiHeaders } from '$lib/utils/headers';
 
-export const load = async ({ fetch }) => {
+export const load = async ({ fetch, setHeaders }) => {
+	setHeaders({
+		'Cache-Control': 'no-store, max-age=0'
+	});
+
 	let response = await fetch('/api/todos/', {
 		method: 'GET',
 		headers: getCommonApiHeaders()
